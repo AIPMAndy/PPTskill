@@ -1,173 +1,158 @@
-# PPT Master — AI 生成原生可编辑 PPTX，支持任意文档输入
+# PPTskill — AI 驱动的 PPTX 生成工具（优化分支）
 
-[![Version](https://img.shields.io/badge/version-v2.3.0-blue.svg)](https://github.com/hugohe3/ppt-master/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/hugohe3/ppt-master.svg)](https://github.com/hugohe3/ppt-master/stargazers)
-[![AtomGit stars](https://atomgit.com/hugohe3/ppt-master/star/badge.svg)](https://atomgit.com/hugohe3/ppt-master)
+[![基于 ppt-master](https://img.shields.io/badge/基于-ppt--master-blue)](https://github.com/hugohe3/ppt-master)
 
 [English](./README.md) | 中文
 
-丢进一份 PDF、DOCX、网址或 Markdown，拿回一份**原生可编辑的 PowerPoint**——真正的形状、真正的文本框、真正的图表，不是图片。点击任何元素即可编辑。
+**PPTskill** 是 [`hugohe3/ppt-master`](https://github.com/hugohe3/ppt-master) 的优化分支，专注于实际工作流集成和 OpenClaw 兼容性。
 
-**核心特点：**
+输入 PDF、DOCX、URL 或 Markdown — 输出**原生可编辑的 PowerPoint**，包含真实的形状、文本框和图表。不是图片。点击任何元素都可以直接编辑。
 
-- 每个元素都是真正的 PowerPoint 对象（DrawingML）——无需"转换为形状"
-- 支持 Claude Code、Cursor、VS Code Copilot 等主流 AI 编辑器
-- 10+ 种输出格式：PPT 16:9、小红书、朋友圈、营销海报等
-- 低成本——VS Code Copilot 下最低 **$0.08/份**；非 Opus 模型也能生成不错的结果
+## 与上游项目的区别
 
-**[在线预览 →](https://hugohe3.github.io/ppt-master/)** · [`examples/`](./examples/) — 15 个项目，229 页
+本分支新增：
 
-## 效果展示
+- ✅ **OpenClaw skill 集成** — 无缝融入 OpenClaw 工作流
+- ✅ **简化的安装流程** — 更清晰的依赖管理
+- ✅ **工作流文档** — 真实项目的实用使用模式
+- ✅ **已验证示例** — 在 macOS/Linux 上验证过的工作路径
 
-<table>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_magazine_garden.png" alt="杂志风 — 打造小院指南" /><br/><sub><b>杂志风</b> — 暖色调，大图排版，生活方式感</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_academic_medical.png" alt="学术风 — 医学图像分割研究" /><br/><sub><b>学术风</b> — 严谨结构，数据图表，论文答辩场景</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_dark_art_mv.png" alt="暗色艺术风 — MV 深度解析" /><br/><sub><b>暗色艺术风</b> — 电影感深色背景，美术馆陈列感</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_nature_wildlife.png" alt="自然风 — 湿地野生动物纪录" /><br/><sub><b>自然纪录风</b> — 沉浸式摄影，简洁信息层级</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_tech_claude_plans.png" alt="科技风 — Claude AI 订阅方案" /><br/><sub><b>科技 / SaaS 风</b> — 白底卡片，定价表格，产品说明书</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_launch_xiaomi.png" alt="发布会风 — 小米春季新品" /><br/><sub><b>发布会风</b> — 高对比度，参数突出，苹果/小米发布会感</sub></td>
-  </tr>
-</table>
-
----
+所有核心 PPT 生成能力来自优秀的上游项目。本分支专注于让它在生产工作流中更易用。
 
 ## 快速开始
 
 ### 1. 安装
 
-**必需：** [Python](https://www.python.org/downloads/) 3.8+ · **可选：** [Node.js](https://nodejs.org/) 18+（微信公众号转换）· [Pandoc](https://pandoc.org/)（DOCX/EPUB 转换）
+**必需：** [Python](https://www.python.org/downloads/) 3.8+  
+**可选：** [Node.js](https://nodejs.org/) 18+（用于微信文章转换）· [Pandoc](https://pandoc.org/)（用于 DOCX/EPUB 转换）
 
 ```bash
 # macOS
 brew install python
-brew install node                # 可选——用于微信公众号等网页转换
-brew install pandoc              # 可选——用于 DOCX/EPUB 转换
+brew install node                # 可选
+brew install pandoc              # 可选
 
 # Ubuntu/Debian
 sudo apt install python3 python3-pip
 sudo apt install nodejs npm      # 可选
 sudo apt install pandoc          # 可选
-
-# Windows — 从 python.org、nodejs.org、pandoc.org 下载安装
 ```
 
 ```bash
-git clone https://github.com/hugohe3/ppt-master.git
-cd ppt-master
+git clone https://github.com/AIPMAndy/PPTskill.git
+cd PPTskill
 pip install -r requirements.txt
 ```
 
-日常更新：`python3 skills/ppt-master/scripts/update_repo.py`
-
 ### 2. 选择 AI 编辑器
 
-| 工具 | 推荐度 | 说明 |
-|------|:------:|------|
-| **[Claude Code](https://claude.ai/)** | ⭐⭐⭐ | 效果最佳——原生 Opus，上下文最充裕 |
+| 工具 | 评分 | 说明 |
+|------|:------:|-------|
+| **[Claude Code](https://claude.ai/)** | ⭐⭐⭐ | 最佳效果 — 原生 Opus，最大上下文 |
 | [Cursor](https://cursor.sh/) / [VS Code + Copilot](https://code.visualstudio.com/) | ⭐⭐ | 不错的替代方案 |
-| Codebuddy IDE | ⭐⭐ | 国产模型最佳选择（Kimi 2.5、MiniMax 2.7） |
+| **[OpenClaw](https://openclaw.ai/)** | ⭐⭐⭐ | 推荐用于工作流自动化 |
 
-### 3. 开始创作
+### 3. 创建
 
-打开 AI 聊天面板，描述你想要的内容：
+打开 AI 对话面板，描述你想要的内容：
 
 ```
-你：我有一份 Q3 季度业绩报告，需要制作成 PPT
+你：我有一份 Q3 季度报告需要做成 PPT
 
-AI：好的，先确认设计规范：
-   [模板] B) 不使用模板
-   [格式] PPT 16:9
-   [页数] 8-10 页
-   ...
+AI：好的。让我们确认设计规格：
+    [模板] B) 无模板
+    [格式] PPT 16:9
+    [页数] 8-10 页
+    ...
 ```
 
-AI 全程处理——内容分析、视觉设计、SVG 生成、PPTX 导出。
+AI 会处理一切 — 内容分析、视觉设计、SVG 生成和 PPTX 导出。
 
-> **输出说明：** `.pptx` 文件包含原生形状，可直接编辑。同时生成 `_svg.pptx` 参考版（在 PowerPoint 中使用"转换为形状"编辑）。需要 Office 2016+。
+> **输出：** `.pptx` 文件包含原生形状 — 可直接编辑。同时会生成一个 `_svg.pptx` 参考文件（在 PowerPoint 中使用"转换为形状"来编辑）。需要 Office 2016+。
 
-> **AI 迷失上下文？** 让它先读 `skills/ppt-master/SKILL.md`。
+### 4. 从现有项目导出
 
-### 4. AI 生图配置（可选）
+如果你已经有一个包含 `svg_final/` 目录的项目：
 
 ```bash
-cp .env.example .env    # 然后填入你的 API Key
+python3 skills/ppt-master/scripts/svg_to_pptx.py <项目路径> -s final
 ```
 
-```env
-IMAGE_BACKEND=gemini                        # 必填——必须显式指定
-GEMINI_API_KEY=your-api-key
-GEMINI_MODEL=gemini-3.1-flash-image-preview
+示例：
+
+```bash
+python3 skills/ppt-master/scripts/svg_to_pptx.py examples/ppt169_顶级咨询风_构建有效AI代理_Anthropic -s final
 ```
 
-支持的后端：`gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
+## 示例库
 
-运行 `python3 skills/ppt-master/scripts/image_gen.py --list-backends` 查看分级。环境变量优先于 `.env`。使用各家独立的 Key（`GEMINI_API_KEY`、`OPENAI_API_KEY` 等）——不支持全局 `IMAGE_API_KEY`。
+查看 [`examples/`](./examples/) — 15 个项目，229 页已验证的工作示例。
 
-> **建议：** 高质量图片推荐在 [Gemini](https://gemini.google.com/) 中生成并选择 **Download full size**。去水印可用 `scripts/gemini_watermark_remover.py`。
+## OpenClaw 集成
 
----
+如果你在使用 OpenClaw，本仓库在 `skills/PPTskill/SKILL.md` 包含了 skill 定义。
 
-## 文档导航
+使用方法：
 
-| | 文档 | 说明 |
-|---|------|------|
-| 📖 | [SKILL.md](./skills/ppt-master/SKILL.md) | 核心流程与规则 |
-| 📐 | [画布格式](./skills/ppt-master/references/canvas-formats.md) | PPT 16:9、小红书、朋友圈等 10+ 种格式 |
-| 🛠️ | [脚本与工具](./skills/ppt-master/scripts/README.md) | 所有脚本和命令 |
-| 💼 | [示例](./examples/README.md) | 15 个项目，229 页 |
-| 🏗️ | [技术路线](./docs/zh/technical-design.md) | 架构、设计哲学、为什么选 SVG |
-| ❓ | [常见问题](./docs/zh/faq.md) | 费用、编辑、自定义模板 |
+1. 将本仓库克隆到你的 OpenClaw 工作区
+2. skill 会被自动检测
+3. 询问你的 agent："从这个文档生成一个 PPT"
 
----
+## 已知限制
+
+- 在某些系统上，完整依赖安装可能因 `pycairo` / `cairo` 要求而失败
+- 这**不会**阻塞核心 PPT 导出功能
+- DOCX/EPUB 转换需要 `pandoc`（可选）
+
+## 已验证的工作路径
+
+测试环境：
+
+- macOS（Apple Silicon + Intel）
+- Python 3.11
+- 上游 commit：`e0d2208`
+
+核心导出路径确认可用：
+
+- ✅ `svg_final/` → 可编辑 `.pptx`
+- ✅ 原生 PPTX 生成
+- ✅ 示例项目成功导出
+
+## 设计哲学
+
+遵循实用工程原则：
+
+1. **首先验证最短工作路径**
+2. **删除不必要的复杂性**
+3. **稳定工作流**
+4. **只在证明有价值后才自动化**
+
+## 上游致谢
+
+所有主要 PPT 生成能力来自：
+
+- **[hugohe3/ppt-master](https://github.com/hugohe3/ppt-master)**
+
+本分支的存在是为了让这个优秀的工作更容易集成到真实工作流中。
 
 ## 贡献
 
-详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+欢迎贡献！请：
 
-## 开源协议
+- 保持改动专注于工作流改进
+- 记录你测试过的内容
+- 尊重上游项目的设计决策
 
-[MIT](LICENSE)
+## 许可证
 
-## 致谢
+MIT License（与上游相同）
 
-[SVG Repo](https://www.svgrepo.com/) · [Robin Williams](https://en.wikipedia.org/wiki/Robin_Williams_(author))（CRAP 设计原则）· 麦肯锡、BCG、贝恩
+本仓库包含工作流文档和集成改进。
+请尊重上游仓库的许可证和署名要求。
 
-## 联系
+## 链接
 
-[GitHub Issues](https://github.com/hugohe3/ppt-master/issues) · [@hugohe3](https://github.com/hugohe3)
-
----
-
-## Star History
-
-如果这个项目对你有帮助，请给一个 ⭐！
-
-<a href="https://star-history.com/#hugohe3/ppt-master&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
- </picture>
-</a>
-
----
-
-## 赞助
-
-如果这个项目帮你省了时间，欢迎请我喝杯咖啡！
-
-**支付宝**
-
-<img src="docs/assets/alipay-qr.jpg" alt="支付宝收款码" width="250" />
-
----
-
-Made with ❤️ by Hugo He
-
-[⬆ 回到顶部](#ppt-master--ai-生成原生可编辑-pptx支持任意文档输入)
+- **上游项目：** https://github.com/hugohe3/ppt-master
+- **本分支：** https://github.com/AIPMAndy/PPTskill
+- **OpenClaw：** https://openclaw.ai/

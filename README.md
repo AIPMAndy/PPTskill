@@ -1,69 +1,49 @@
-# PPT Master — AI generates natively editable PPTX from any document
+# PPTskill — AI-Powered PPTX Generation (Optimized Fork)
 
-[![Version](https://img.shields.io/badge/version-v2.3.0-blue.svg)](https://github.com/hugohe3/ppt-master/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/hugohe3/ppt-master.svg)](https://github.com/hugohe3/ppt-master/stargazers)
-[![AtomGit stars](https://atomgit.com/hugohe3/ppt-master/star/badge.svg)](https://atomgit.com/hugohe3/ppt-master)
+[![Based on ppt-master](https://img.shields.io/badge/based%20on-ppt--master-blue)](https://github.com/hugohe3/ppt-master)
 
 English | [中文](./README_CN.md)
 
+**PPTskill** is an optimized fork of [`hugohe3/ppt-master`](https://github.com/hugohe3/ppt-master), focused on practical workflow integration and OpenClaw compatibility.
+
 Drop in a PDF, DOCX, URL, or Markdown — get back a **natively editable PowerPoint** with real shapes, real text boxes, and real charts. Not images. Click anything and edit it.
 
-**What makes it different:**
+## What's Different from Upstream
 
-- Every element is a real PowerPoint object (DrawingML) — no "Convert to Shape" needed
-- Works with Claude Code, Cursor, VS Code Copilot, and other AI editors
-- 10+ output formats: PPT 16:9, social media cards, marketing posters, and more
-- Low cost — as little as **$0.08 per presentation** with VS Code Copilot; even non-Opus models produce decent results
+This fork adds:
 
-**[See live examples →](https://hugohe3.github.io/ppt-master/)** · [`examples/`](./examples/) — 15 projects, 229 pages
+- ✅ **OpenClaw skill integration** — works seamlessly in OpenClaw workflows
+- ✅ **Simplified setup** — clearer dependency management
+- ✅ **Workflow documentation** — practical usage patterns for real projects
+- ✅ **Tested examples** — verified working paths on macOS/Linux
 
-## Gallery
-
-<table>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_magazine_garden.png" alt="Magazine style — Garden building guide" /><br/><sub><b>Magazine</b> — warm earthy tones, photo-rich layout</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_academic_medical.png" alt="Academic style — Medical image segmentation research" /><br/><sub><b>Academic</b> — structured research format, data-driven</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_dark_art_mv.png" alt="Dark art style — Music video analysis" /><br/><sub><b>Dark Art</b> — cinematic dark background, gallery aesthetic</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_nature_wildlife.png" alt="Nature style — Wildlife wetland documentary" /><br/><sub><b>Nature Documentary</b> — immersive photography, minimal UI</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="docs/assets/screenshots/preview_tech_claude_plans.png" alt="Tech style — Claude AI subscription plans" /><br/><sub><b>Tech / SaaS</b> — clean white cards, pricing table layout</sub></td>
-    <td align="center"><img src="docs/assets/screenshots/preview_launch_xiaomi.png" alt="Product launch style — Xiaomi spring release" /><br/><sub><b>Product Launch</b> — high contrast, bold specs highlight</sub></td>
-  </tr>
-</table>
-
----
+All core PPT generation capability comes from the excellent upstream project. This fork focuses on making it easier to use in production workflows.
 
 ## Quick Start
 
 ### 1. Install
 
-**Required:** [Python](https://www.python.org/downloads/) 3.8+ · **Optional:** [Node.js](https://nodejs.org/) 18+ (for WeChat page conversion) · [Pandoc](https://pandoc.org/) (for DOCX/EPUB conversion)
+**Required:** [Python](https://www.python.org/downloads/) 3.8+  
+**Optional:** [Node.js](https://nodejs.org/) 18+ (for WeChat page conversion) · [Pandoc](https://pandoc.org/) (for DOCX/EPUB conversion)
 
 ```bash
 # macOS
 brew install python
-brew install node                # optional — for WeChat page conversion
-brew install pandoc              # optional — for DOCX/EPUB conversion
+brew install node                # optional
+brew install pandoc              # optional
 
 # Ubuntu/Debian
 sudo apt install python3 python3-pip
 sudo apt install nodejs npm      # optional
 sudo apt install pandoc          # optional
-
-# Windows — download from python.org, nodejs.org, pandoc.org
 ```
 
 ```bash
-git clone https://github.com/hugohe3/ppt-master.git
-cd ppt-master
+git clone https://github.com/AIPMAndy/PPTskill.git
+cd PPTskill
 pip install -r requirements.txt
 ```
-
-To update later: `python3 skills/ppt-master/scripts/update_repo.py`
 
 ### 2. Pick an AI Editor
 
@@ -71,7 +51,7 @@ To update later: `python3 skills/ppt-master/scripts/update_repo.py`
 |------|:------:|-------|
 | **[Claude Code](https://claude.ai/)** | ⭐⭐⭐ | Best results — native Opus, largest context |
 | [Cursor](https://cursor.sh/) / [VS Code + Copilot](https://code.visualstudio.com/) | ⭐⭐ | Good alternatives |
-| Codebuddy IDE | ⭐⭐ | Best for Chinese models (Kimi 2.5, MiniMax 2.7) |
+| **[OpenClaw](https://openclaw.ai/)** | ⭐⭐⭐ | Recommended for workflow automation |
 
 ### 3. Create
 
@@ -91,83 +71,88 @@ The AI handles everything — content analysis, visual design, SVG generation, a
 
 > **Output:** The `.pptx` file contains native shapes — directly editable. A second `_svg.pptx` reference file is also generated (use "Convert to Shape" in PowerPoint to edit). Requires Office 2016+.
 
-> **AI lost context?** Ask it to read `skills/ppt-master/SKILL.md`.
+### 4. Export from Existing Project
 
-### 4. AI Image Generation (Optional)
+If you already have a project with `svg_final/` directory:
 
 ```bash
-cp .env.example .env    # then edit with your API key
+python3 skills/ppt-master/scripts/svg_to_pptx.py <project_path> -s final
 ```
 
-```env
-IMAGE_BACKEND=gemini                        # required — must be set explicitly
-GEMINI_API_KEY=your-api-key
-GEMINI_MODEL=gemini-3.1-flash-image-preview
+Example:
+
+```bash
+python3 skills/ppt-master/scripts/svg_to_pptx.py examples/ppt169_顶级咨询风_构建有效AI代理_Anthropic -s final
 ```
 
-Supported backends: `gemini` · `openai` · `qwen` · `zhipu` · `volcengine` · `stability` · `bfl` · `ideogram` · `siliconflow` · `fal` · `replicate`
+## Gallery
 
-Run `python3 skills/ppt-master/scripts/image_gen.py --list-backends` to see tiers. Environment variables override `.env`. Use provider-specific keys (`GEMINI_API_KEY`, `OPENAI_API_KEY`, etc.) — global `IMAGE_API_KEY` is not supported.
+See [`examples/`](./examples/) — 15 projects, 229 pages of verified working examples.
 
-> **Tip:** For best quality, generate images in [Gemini](https://gemini.google.com/) and select **Download full size**. Remove the watermark with `scripts/gemini_watermark_remover.py`.
+## OpenClaw Integration
 
----
+If you're using OpenClaw, this repo includes a skill definition at `skills/PPTskill/SKILL.md`.
 
-## Documentation
+To use it:
 
-| | Document | Description |
-|---|----------|-------------|
-| 📖 | [SKILL.md](./skills/ppt-master/SKILL.md) | Core workflow and rules |
-| 📐 | [Canvas Formats](./skills/ppt-master/references/canvas-formats.md) | PPT 16:9, Xiaohongshu, WeChat, and 10+ formats |
-| 🛠️ | [Scripts & Tools](./skills/ppt-master/scripts/README.md) | All scripts and commands |
-| 💼 | [Examples](./examples/README.md) | 15 projects, 229 pages |
-| 🏗️ | [Technical Design](./docs/technical-design.md) | Architecture, design philosophy, why SVG |
-| ❓ | [FAQ](./docs/faq.md) | Cost, editing, custom templates |
+1. Clone this repo to your OpenClaw workspace
+2. The skill will be auto-detected
+3. Ask your agent: "Generate a PPT from this document"
 
----
+## Known Limitations
+
+- Full dependency install may fail on some systems due to `pycairo` / `cairo` requirements
+- This does **not** block core PPT export functionality
+- DOCX/EPUB conversion requires `pandoc` (optional)
+
+## Verified Working Path
+
+Tested on:
+
+- macOS (Apple Silicon + Intel)
+- Python 3.11
+- Upstream commit: `e0d2208`
+
+Core export path confirmed working:
+
+- ✅ `svg_final/` → editable `.pptx`
+- ✅ Native PPTX generation
+- ✅ Example projects export successfully
+
+## Philosophy
+
+Following practical engineering principles:
+
+1. **Verify the shortest working path first**
+2. **Remove unnecessary complexity**
+3. **Stabilize the workflow**
+4. **Automate only after it's proven valuable**
+
+## Upstream Credit
+
+All major PPT generation capability comes from:
+
+- **[hugohe3/ppt-master](https://github.com/hugohe3/ppt-master)**
+
+This fork exists to make that excellent work easier to integrate into real workflows.
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for how to get involved.
+Contributions welcome! Please:
+
+- Keep changes focused on workflow improvements
+- Document what you've tested
+- Respect the upstream project's design decisions
 
 ## License
 
-[MIT](LICENSE)
+MIT License (same as upstream)
 
-## Acknowledgments
+This repository contains workflow documentation and integration improvements.
+Please respect the upstream repository's license and attribution requirements.
 
-[SVG Repo](https://www.svgrepo.com/) · [Robin Williams](https://en.wikipedia.org/wiki/Robin_Williams_(author)) (CRAP principles) · McKinsey, BCG, Bain
+## Links
 
-## Contact
-
-[GitHub Issues](https://github.com/hugohe3/ppt-master/issues) · [@hugohe3](https://github.com/hugohe3)
-
----
-
-## Star History
-
-If this project helps you, please give it a ⭐!
-
-<a href="https://star-history.com/#hugohe3/ppt-master&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=hugohe3/ppt-master&type=Date" />
- </picture>
-</a>
-
----
-
-## Sponsor
-
-If this project saves you time, consider buying me a coffee!
-
-**Alipay / 支付宝**
-
-<img src="docs/assets/alipay-qr.jpg" alt="Alipay QR Code" width="250" />
-
----
-
-Made with ❤️ by Hugo He
-
-[⬆ Back to Top](#ppt-master--ai-generates-natively-editable-pptx-from-any-document)
+- **Upstream:** https://github.com/hugohe3/ppt-master
+- **This Fork:** https://github.com/AIPMAndy/PPTskill
+- **OpenClaw:** https://openclaw.ai/
