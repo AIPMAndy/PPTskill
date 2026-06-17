@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or Discussion
+    url: https://github.com/AIPMAndy/PPTskill/discussions
+    about: Ask questions or discuss ideas with the community
+  - name: Documentation
+    url: https://github.com/AIPMAndy/PPTskill/blob/main/README.md
+    about: Read the comprehensive documentation
+  - name: FAQ
+    url: https://github.com/AIPMAndy/PPTskill/blob/main/docs/faq.md
+    about: Check frequently asked questions
+  - name: Upstream Project
+    url: https://github.com/hugohe3/ppt-master
+    about: Visit the original ppt-master project
