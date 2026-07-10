@@ -23,6 +23,8 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 from urllib.parse import unquote
 
+from typing import Optional, Union
+
 try:
     from PIL import Image
 except ImportError:
@@ -129,7 +131,7 @@ def crop_image_to_size(
 
 def process_svg_images(
     svg_file: str,
-    output_dir: str | Path | None = None,
+    output_dir: Union[str, Optional[Path]] = None,
     dry_run: bool = False,
     verbose: bool = True,
 ) -> tuple[int, int]:

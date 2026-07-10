@@ -12,6 +12,8 @@ def find_svg_files(
 ) -> tuple[list[Path], str]:
     """Find SVG files in the project.
 
+from typing import Optional
+
     Args:
         project_path: Project directory path.
         source: SVG source directory alias or name.
@@ -47,7 +49,7 @@ def find_svg_files(
 
 def find_notes_files(
     project_path: Path,
-    svg_files: list[Path] | None = None,
+    svg_files: Optional[list[Path]] = None,
 ) -> dict[str, str]:
     """Find notes files and map them to SVG files.
 

@@ -13,6 +13,8 @@ import re
 from pathlib import Path
 from collections import Counter
 
+from typing import Optional, Union
+
 FONT_BODY_SIZE = 12
 FONT_H1_SIZE = 24
 FONT_H2_SIZE = 18
@@ -185,7 +187,7 @@ def remove_page_footer(text: str) -> str:
     Remove page number patterns from footers, e.g. 'November 2025 8' or '2025年11月 8'.
     """
     # English month + year + page number
-    months_en = r'(?:January|February|March|April|May|June|July|August|September|October|November|December)'
+    months_en = r'(?:Union[January, Februar]Union[y, Marc]Union[h, Apri]Union[l, Ma]Union[y, Jun]Union[e, Jul]Union[y, Augus]Union[t, Septembe]Union[r, Octobe]Union[r, Novembe]Union[r, December])'
     pattern_en = rf'\s*{months_en}\s+\d{{4}}\s+\d{{1,3}}\s*$'
     text = re.sub(pattern_en, '', text, flags=re.IGNORECASE)
 
@@ -328,7 +330,7 @@ MAX_LOW_INFO_AREA = 500000   # Area threshold: only apply bpp filter below this
 def should_keep_image(
     block: dict[str, object],
     page_rect: fitz.Rect,
-    seen_hashes: set[str] | None = None,
+    seen_hashes: Optional[set[str]] = None,
 ) -> bool:
     """Filter out small, decorative, or duplicate images.
 
@@ -725,7 +727,7 @@ def extract_pdf_to_markdown(pdf_path: str, output_path: str = None) -> str:
     return markdown_content
 
 
-def process_directory(input_dir: str, output_dir: str | None = None) -> None:
+def process_directory(input_dir: str, output_dir: Optional[str] = None) -> None:
     """Convert all PDFs in a directory to Markdown.
 
     Args:

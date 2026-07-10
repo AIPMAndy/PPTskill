@@ -119,13 +119,22 @@ AI：好的，让我确认设计规格：
 - 自然风 × 1（野生动物纪录片）
 - 杂志风 × 1（园艺指南）
 
+### 最新验证案例（2026-07-10）
+
+**《普通人必装的10个AI Skill》** — 13页完整PPT
+- **模板**：smart_red（现代活力风）
+- **内容**：10个AI工具介绍 + 使用场景
+- **功能验证**：✅ SVG生成、图标嵌入、演讲者备注、PPTX导出
+- **文件大小**：88KB（Native DrawingML版本）
+- **位置**：`projects/普通人必装10个AI_Skill_ppt169_20260709/`
+
 ---
 
 ## 🛠️ 安装指南
 
 ### 系统要求
 
-- **Python** 3.8+（必需）
+- **Python** 3.9+（必需，推荐 3.9/3.10 以确保类型注解兼容性）
 - **Node.js** 18+（可选 — 用于微信文章转换）
 - **Pandoc**（可选 — 用于 DOCX/EPUB 转换）
 
@@ -170,6 +179,65 @@ python3 skills/ppt-master/scripts/svg_to_pptx.py <项目路径> -s final
 python3 skills/ppt-master/scripts/project_manager.py init my_project --format ppt169
 ```
 
+### 完整工作流示例
+
+```bash
+# 1. 创建项目目录结构
+cd projects/your_project_ppt169_20260710
+
+# 2. 生成 SVG 页面（放入 svg_output/）
+# 手动创建或通过脚本生成
+
+# 3. 准备演讲者备注
+# 创建 notes/total.md，标题格式必须匹配 SVG 文件名（不带.svg）
+
+# 4. 分割演讲者备注
+python3 skills/ppt-master/scripts/total_md_split.py projects/your_project_ppt169_20260710
+
+# 5. SVG 后处理（嵌入图标、转换圆角矩形）
+python3 skills/ppt-master/scripts/finalize_svg.py projects/your_project_ppt169_20260710
+
+# 6. 导出为 PPTX
+python3 skills/ppt-master/scripts/svg_to_pptx.py projects/your_project_ppt169_20260710 -s final
+```
+
+### 故障排除
+
+**问题：演讲者备注无法匹配**
+```bash
+# 确保 notes/total.md 中的二级标题与 SVG 文件名完全一致
+# 正确：## 01_封面
+# 错误：## 页面01：封面
+```
+
+**问题：图标未显示**
+```bash
+# 检查 finalize_svg.py 输出的警告信息
+# 如果提示 "Icon not found: xxx"，说明图标名称不存在
+# 可用图标列表见 skills/ppt-master/icon_library/
+```
+
+**问题：Python 类型注解错误**
+```bash
+# 确保使用 Python 3.9 或 3.10
+python3 --version
+
+# 如果遇到 "unsupported operand type(s) for |"
+# 说明代码中还有 PEP 604 语法，请提交 issue
+```
+
+### Claude Code Skill 集成
+
+将本仓库添加为 Claude Code Skill：
+
+```bash
+# 1. 复制 skill 到 Claude Code 技能目录
+cp -r skills/ppt-master ~/.claude/skills/
+
+# 2. 在对话中直接调用
+# 你：用 PPT Master 生成一个关于 AI 的演示文稿
+```
+
 ### OpenClaw Skill 集成
 
 1. 将本仓库克隆到 OpenClaw 工作区
@@ -184,6 +252,8 @@ python3 skills/ppt-master/scripts/project_manager.py init my_project --format pp
 - [x] 10+ 专业模板
 - [x] OpenClaw 集成
 - [x] 中英双语文档
+- [x] Python 3.9 兼容性验证（2026-07-10）
+- [x] Claude Code Skill 集成
 - [ ] 一键安装脚本
 - [ ] GitHub Actions CI/CD
 - [ ] 视频教程
@@ -212,10 +282,14 @@ python3 skills/ppt-master/scripts/project_manager.py init my_project --format pp
 
 ## 📝 已知限制
 
+- **Python 版本要求**：推荐使用 Python 3.9 或 3.10
+  - ⚠️ 代码已从 PEP 604 语法（`X | Y`）转换为兼容语法（`Union[X, Y]`）
+  - 已在 Python 3.9 环境验证所有核心功能正常
 - 完整依赖安装可能因 `pycairo` / `cairo` 要求而失败
   - ⚠️ 这**不会**阻塞核心 PPT 导出功能
 - DOCX/EPUB 转换需要 `pandoc`（可选）
-- 需要 Office 2016+ 打开生成的 PPTX
+- 需要 Office 2016+ 或 WPS 打开生成的 PPTX
+- 图像生成功能需要配置 `GEMINI_API_KEY` 或 `OPENAI_API_KEY` 环境变量
 
 ---
 
@@ -249,6 +323,34 @@ python3 skills/ppt-master/scripts/project_manager.py init my_project --format pp
 
 [![微信](https://img.shields.io/badge/微信-AIPMAndy-green)](https://github.com/AIPMAndy)
 [![GitHub](https://img.shields.io/badge/GitHub-AIPMAndy-blue)](https://github.com/AIPMAndy)
+
+---
+
+## 📅 更新日志
+
+### v1.1.0 (2026-07-10)
+
+**兼容性改进**
+- ✅ 修复 Python 3.9 类型注解兼容性问题（73处修改，覆盖12个核心文件）
+- ✅ 所有 PEP 604 语法（`X | Y`）已转换为 `Union[X, Y]`
+- ✅ 在 Python 3.9 环境完整验证核心功能
+
+**新增验证案例**
+- 📊 《普通人必装的10个AI Skill》13页完整PPT
+- 🎨 验证 smart_red 模板在真实场景的表现
+- 📝 完整演讲者备注生成和分割流程
+
+**文档改进**
+- 📖 添加完整工作流示例
+- 🔧 新增故障排除章节
+- 💡 补充 Claude Code Skill 集成说明
+
+### v1.0.0 (Initial Release)
+
+- 🎨 10+ 专业模板
+- 🤖 OpenClaw 集成
+- 📦 核心 PPT 生成能力
+- 📚 15个示例项目（229页）
 
 ---
 

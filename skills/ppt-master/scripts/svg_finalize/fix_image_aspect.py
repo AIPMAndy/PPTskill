@@ -32,6 +32,8 @@ from pathlib import Path
 from xml.etree import ElementTree as ET
 
 # Try to import PIL for getting image dimensions
+from typing import Optional
+
 try:
     from PIL import Image
     HAS_PIL = True
@@ -41,7 +43,7 @@ except ImportError:
     print("       Will try to use basic method for JPEG/PNG files.")
 
 
-def get_image_dimensions_pil(image_path: str) -> tuple[int | None, int | None]:
+def get_image_dimensions_pil(image_path: str) -> tuple[Optional[int], Optional[int]]:
     """Get image dimensions using PIL."""
     try:
         with Image.open(image_path) as img:
@@ -51,7 +53,7 @@ def get_image_dimensions_pil(image_path: str) -> tuple[int | None, int | None]:
         return None, None
 
 
-def get_image_dimensions_basic(image_path: str) -> tuple[int | None, int | None]:
+def get_image_dimensions_basic(image_path: str) -> tuple[Optional[int], Optional[int]]:
     """Get image dimensions using basic parsing without PIL."""
     try:
         with open(image_path, 'rb') as f:
@@ -97,7 +99,7 @@ def get_image_dimensions_basic(image_path: str) -> tuple[int | None, int | None]
         return None, None
 
 
-def get_image_dimensions_from_base64(data_uri: str) -> tuple[int | None, int | None]:
+def get_image_dimensions_from_base64(data_uri: str) -> tuple[Optional[int], Optional[int]]:
     """Get image dimensions from a Base64 data URI."""
     import io
     try:
@@ -126,7 +128,7 @@ def get_image_dimensions_from_base64(data_uri: str) -> tuple[int | None, int | N
         return None, None
 
 
-def get_image_dimensions(href: str, svg_dir: str) -> tuple[int | None, int | None]:
+def get_image_dimensions(href: str, svg_dir: str) -> tuple[Optional[int], Optional[int]]:
     """Get image dimensions for either inline or external images."""
     # Handle data URI
     if href.startswith('data:'):

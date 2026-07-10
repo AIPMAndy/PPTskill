@@ -28,6 +28,8 @@ import argparse
 import re
 from pathlib import Path
 
+from typing import Optional, Union
+
 HEADING_RE = re.compile(r'^(#{1,6})\s*(.+?)\s*$')
 HR_RE = re.compile(r'^\s*[-*]{3,}\s*$')
 
@@ -45,7 +47,7 @@ def normalize_title(title: str) -> str:
 
 
 
-def extract_leading_number(text: str) -> int | None:
+def extract_leading_number(text: str) -> Optional[int]:
     """Extract leading slide number if present."""
     if not text:
         return None
@@ -60,7 +62,7 @@ def extract_leading_number(text: str) -> int | None:
     text_lower = text.lower().strip()
 
     # Slide/Page X
-    m = re.match(r'^(?:slide|page|p)\s*[-_:]?\s*(\d{1,3})', text_lower)
+    m = re.match(r'^(?:Union[slide, pag]Union[e, p])\s*[-_:]?\s*(\d{1,3})', text_lower)
     if m:
         return int(m.group(1))
 
@@ -92,8 +94,8 @@ def match_title(
     exact: set[str],
     norm_map: dict[str, list[str]],
     num_map: dict[int, list[str]],
-    svg_stems: list[str] | None = None,
-) -> str | None:
+    svg_stems: Optional[list[str]] = None,
+) -> Optional[str]:
     """Match a note heading to its corresponding SVG stem."""
     if raw_title in exact:
         return raw_title
@@ -131,7 +133,7 @@ def find_svg_files(project_path: Path) -> list[Path]:
 
 def parse_total_md(
     md_path: Path,
-    svg_stems: list[str] | None = None,
+    svg_stems: Optional[list[str]] = None,
     verbose: bool = True,
 ) -> dict[str, str]:
     """
@@ -159,7 +161,7 @@ def parse_total_md(
 
     # Parse by headings (supports # / ## / ###)
     notes: dict[str, str] = {}
-    current_key: str | None = None
+    current_key: Optional[str] = None
     current_lines: list[str] = []
     unmatched_headings: list[str] = []
 

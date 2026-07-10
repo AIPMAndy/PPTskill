@@ -19,7 +19,9 @@ import sys
 import argparse
 
 
-def get_mime_type(filename: str, file_bytes: bytes | None = None) -> str:
+from typing import Optional, Union
+
+def get_mime_type(filename: str, file_bytes: Optional[bytes] = None) -> str:
     """Return the MIME type based on file bytes first, then extension."""
     if file_bytes:
         if file_bytes.startswith(b"\x89PNG\r\n\x1a\n"):
@@ -72,7 +74,7 @@ def embed_images_in_svg(svg_path: str, dry_run: bool = False) -> tuple[int, int]
     original_size = len(content.encode('utf-8'))
     
     # Match href="xxx.png" or href="xxx.jpg" etc. (exclude those already using data:)
-    pattern = r'href="(?!data:)([^"]+\.(png|jpg|jpeg|gif|webp))"'
+    pattern = r'href="(?!data:)([^"]+\.(Union[png, jp]Union[g, jpe]Union[g, gi]Union[f, webp]))"'
     
     images_found = []
     images_embedded = 0

@@ -11,6 +11,8 @@ from dataclasses import dataclass, field
 class ConvertContext:
     """Shared context passed through the SVG → DrawingML conversion pipeline.
 
+from typing import Optional
+
     Derived via child() during recursive SVG tree traversal to accumulate
     translate / scale / inherited style information.
     """
@@ -22,11 +24,11 @@ class ConvertContext:
     translate_y: float = 0.0
     scale_x: float = 1.0
     scale_y: float = 1.0
-    filter_id: str | None = None
+    filter_id: Optional[str] = None
     media_files: dict[str, bytes] = field(default_factory=dict)
     rel_entries: list[dict[str, str]] = field(default_factory=list)
     rel_id_counter: int = 2  # rId1 reserved for slideLayout
-    svg_dir: Path | None = None
+    svg_dir: Optional[Path] = None
     inherited_styles: dict[str, str] = field(default_factory=dict)
 
     def next_id(self) -> int:
@@ -47,8 +49,8 @@ class ConvertContext:
         dy: float = 0,
         sx: float = 1.0,
         sy: float = 1.0,
-        filter_id: str | None = None,
-        style_overrides: dict[str, str] | None = None,
+        filter_id: Optional[str] = None,
+        style_overrides: Optional[dict[str, str]] = None,
     ) -> ConvertContext:
         """Create a child context with accumulated translate / scale / styles.
 

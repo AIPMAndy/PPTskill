@@ -30,6 +30,8 @@ from pathlib import Path
 
 
 # Default icon directory
+from typing import Union
+
 DEFAULT_ICONS_DIR = Path(__file__).parent.parent.parent / 'templates' / 'icons'
 
 # Icon base size
@@ -64,7 +66,7 @@ def extract_paths_from_icon(icon_path: Path) -> list[str]:
     return paths
 
 
-def parse_use_element(use_match: str) -> dict[str, str | float]:
+def parse_use_element(use_match: str) -> dict[str, Union[str, float]]:
     """
     Parse attributes of a use element.
 
@@ -74,7 +76,7 @@ def parse_use_element(use_match: str) -> dict[str, str | float]:
     Returns:
         Attribute dictionary
     """
-    attrs: dict[str, str | float] = {}
+    attrs: dict[str, Union[str, float]] = {}
     
     # Extract data-icon
     icon_match = re.search(r'data-icon="([^"]+)"', use_match)
@@ -95,7 +97,7 @@ def parse_use_element(use_match: str) -> dict[str, str | float]:
     return attrs
 
 
-def generate_icon_group(attrs: dict[str, str | float], paths: list[str]) -> str:
+def generate_icon_group(attrs: dict[str, Union[str, float]], paths: list[str]) -> str:
     """
     Generate the icon's <g> element.
 

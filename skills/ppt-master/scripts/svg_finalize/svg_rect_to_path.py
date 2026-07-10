@@ -23,7 +23,7 @@ import sys
 import re
 import argparse
 from pathlib import Path
-from typing import Any, Tuple
+from typing import Any, Tuple, Union
 from xml.etree import ElementTree as ET
 
 
@@ -75,7 +75,7 @@ def parse_float(val: str, default: float = 0.0) -> float:
         return default
     try:
         # Remove units
-        val = re.sub(r'(px|pt|em|%|rem)$', '', val.strip())
+        val = re.sub(r'(Union[px, p]Union[t, e]m|%|rem)$', '', val.strip())
         return float(val)
     except ValueError:
         return default

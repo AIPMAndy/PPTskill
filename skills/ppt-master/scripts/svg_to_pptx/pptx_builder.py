@@ -39,17 +39,19 @@ except ImportError:
 def create_pptx_with_native_svg(
     svg_files: list[Path],
     output_path: Path,
-    canvas_format: str | None = None,
+    canvas_format: Optional[str] = None,
     verbose: bool = True,
-    transition: str | None = 'fade',
+    transition: Optional[str] = 'fade',
     transition_duration: float = 0.5,
-    auto_advance: float | None = None,
+    auto_advance: Optional[float] = None,
     use_compat_mode: bool = True,
-    notes: dict[str, str] | None = None,
+    notes: Optional[dict[str, str]] = None,
     enable_notes: bool = True,
     use_native_shapes: bool = False,
 ) -> bool:
     """Create a PPTX file with native SVG.
+
+from typing import Optional
 
     Args:
         svg_files: List of SVG files.
@@ -84,7 +86,7 @@ def create_pptx_with_native_svg(
         use_compat_mode = False
 
     # Auto-detect canvas format or get dimensions from viewBox
-    custom_pixels: tuple[int, int] | None = None
+    custom_pixels: Optional[tuple[int, int]] = None
     if canvas_format is None:
         canvas_format = detect_format_from_svg(svg_files[0])
         if canvas_format and verbose:

@@ -9,6 +9,8 @@ import time
 
 import requests
 
+from typing import Optional
+
 try:
     from PIL import Image as PILImage
     HAS_PIL = True
@@ -60,7 +62,7 @@ EXT_TO_PIL_FORMAT = {
 }
 
 
-def detect_image_extension(image_bytes: bytes, content_type: str = None) -> str | None:
+def detect_image_extension(image_bytes: bytes, content_type: str = None) -> Optional[str]:
     """Best-effort detection of the real image format."""
     if content_type:
         clean_type = content_type.split(";", 1)[0].strip().lower()
@@ -210,8 +212,8 @@ def poll_json(
     interval_seconds: float = 2.0,
     timeout_seconds: int = 300,
     status_label: str = "status",
-    ready_values: list[str] | None = None,
-    failed_values: list[str] | None = None,
+    ready_values: Optional[list[str]] = None,
+    failed_values: Optional[list[str]] = None,
 ) -> dict:
     """Poll a JSON endpoint until it reports a ready or failed status."""
     ready = {value.lower() for value in (ready_values or ["ready", "success", "succeeded"])}

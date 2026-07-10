@@ -5,6 +5,8 @@ import argparse
 from xml.etree import ElementTree as ET
 
 
+from typing import Optional
+
 SVG_NS = "http://www.w3.org/2000/svg"
 NSMAP = {"svg": SVG_NS}
 
@@ -46,7 +48,7 @@ TEXT_STYLE_ATTRS = {
 num_re = re.compile(r"^[\s,]*([+-]?(?:\d+\.?\d*|\d*\.\d+))")
 
 
-def parse_first_number(val: str | None) -> float | None:
+def parse_first_number(val: Optional[str]) -> Optional[float]:
     """Parse the first numeric token from an SVG attribute value."""
     if val is None:
         return None
@@ -59,7 +61,7 @@ def parse_first_number(val: str | None) -> float | None:
         return None
 
 
-def format_number(n: float | None) -> str | None:
+def format_number(n: Optional[float]) -> Optional[str]:
     """Format a float for compact SVG attribute output."""
     if n is None:
         return None
@@ -70,7 +72,7 @@ def format_number(n: float | None) -> str | None:
     return s
 
 
-def parse_style(style_str: str | None) -> dict[str, str]:
+def parse_style(style_str: Optional[str]) -> dict[str, str]:
     """Parse an inline SVG style string into a mapping."""
     out: dict[str, str] = {}
     if not style_str:
@@ -92,7 +94,7 @@ def style_to_string(style_map: dict[str, str]) -> str:
     return ";".join(f"{k}:{v}" for k, v in style_map.items())
 
 
-def merge_styles(parent_style: str | None, child_style: str | None) -> str:
+def merge_styles(parent_style: Optional[str], child_style: Optional[str]) -> str:
     """Merge parent and child inline styles, preferring child values."""
     p = parse_style(parent_style)
     c = parse_style(child_style)
@@ -100,7 +102,7 @@ def merge_styles(parent_style: str | None, child_style: str | None) -> str:
     return style_to_string(p)
 
 
-def get_attr(elem: ET.Element | None, name: str, default: str | None = None) -> str | None:
+def get_attr(elem: ET.Optional[Element], name: str, default: Optional[str] = None) -> Optional[str]:
     """Read an attribute from an element with a default fallback."""
     return elem.get(name) if elem is not None and name in elem.attrib else default
 
@@ -108,9 +110,9 @@ def get_attr(elem: ET.Element | None, name: str, default: str | None = None) -> 
 def compute_line_positions(
     text_el: ET.Element,
     tspan_el: ET.Element,
-    cur_x: float | None,
-    cur_y: float | None,
-) -> tuple[float | None, float | None]:
+    cur_x: Optional[float],
+    cur_y: Optional[float],
+) -> tuple[Optional[float], Optional[float]]:
     """
     Compute absolute x,y for a tspan based on parent <text> current baseline and tspan's x/y/dx/dy.
     Returns (new_x, new_y).
@@ -154,7 +156,7 @@ def collect_text_content(el: ET.Element) -> str:
 def copy_text_attrs(
     src_el: ET.Element,
     dst_el: ET.Element,
-    exclude: set[str] | None = None,
+    exclude: Optional[set[str]] = None,
 ) -> None:
     """Copy shared text styling attributes between SVG text elements."""
     exclude = exclude or set()
@@ -294,10 +296,10 @@ def flatten_text_with_tspans(tree: ET.ElementTree) -> bool:
 
 def _create_text_element_from_line(
     text_el: ET.Element,
-    lead_text: str | None,
+    lead_text: Optional[str],
     tspans: list[ET.Element],
-    x: float | None,
-    y: float | None,
+    x: Optional[float],
+    y: Optional[float],
 ) -> ET.Element:
     """
     Create a text element from a line's content (may contain leading text and multiple tspans).
@@ -401,7 +403,7 @@ def _compute_default_out_base(inp: str) -> str:
         return base + "_flattext" + ext
 
 
-def _interactive_get_paths() -> tuple[str | None, str | None]:
+def _interactive_get_paths() -> tuple[Optional[str], Optional[str]]:
     """
     Interactive mode: prompt the user for input path (SVG file or directory)
     and optional output path. Returns (inp, out_base) or (None, None) if cancelled.
