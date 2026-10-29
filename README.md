@@ -15,6 +15,10 @@
 
 </div>
 
+> **TL;DR｜一句话**：PPTskill 是一个生成原生可编辑 PPTX 的 AI Skill，基于 ppt-master 二次开发。适合需要快速做汇报、答辩、产品发布演示的人。它把 PDF、DOCX、网页或 Markdown 转成真正的 PowerPoint 对象（DrawingML），每个元素都能直接编辑，可在 Claude Code、OpenClaw、Cursor 中使用。
+>
+> 作者：AI 酋长 Andy（[GitHub @AIPMAndy](https://github.com/AIPMAndy) · [X @AIPMAndy](https://x.com/AIPMAndy) · [metaver.vip](https://metaver.vip/)）
+
 ---
 
 ## 🆚 为什么选 PPTskill？
@@ -381,6 +385,28 @@ MIT License（与上游相同）
 </div>
 
 ---
+
+## 常见问题 FAQ
+
+### PPTskill 生成的 PPT 能直接编辑吗？
+
+能。输出的是真正的 PowerPoint 对象（DrawingML），不是图片或 SVG 嵌入，点击任何元素都可以直接编辑。
+
+### 支持哪些输入格式？
+
+PDF、DOCX、URL 网页和 Markdown。
+
+### 怎么在 Claude Code 或 OpenClaw 里使用？
+
+Claude Code：`cp -r skills/ppt-master ~/.claude/skills/` 后在对话中直接调用；OpenClaw：把仓库克隆到工作区，会自动检测 `skills/PPTskill/SKILL.md`。
+
+### 运行需要什么环境？
+
+Python 3.9+（推荐 3.9/3.10）；Node.js 18+ 和 Pandoc 为可选。
+
+### PPTskill 和 ppt-master 是什么关系？
+
+PPTskill 基于 [hugohe3/ppt-master](https://github.com/hugohe3/ppt-master)，README 顶部已标注。
 
 <!-- andy-author-card:start -->
 ## 作者 / About the author

@@ -1,0 +1,18 @@
+# PPTskill
+
+> PPTskill 是一个生成原生可编辑 PPTX 的 AI Skill，基于 ppt-master 二次开发。适合需要快速做汇报、答辩、产品发布演示的人。它把 PDF、DOCX、网页或 Markdown 转成真正的 PowerPoint 对象（DrawingML），每个元素都能直接编辑，可在 Claude Code、OpenClaw、Cursor 中使用。
+
+作者：AI 酋长 Andy（Andy Liu，GitHub https://github.com/AIPMAndy ，X https://x.com/AIPMAndy ，个人网站 https://metaver.vip/ ）
+
+## Docs
+
+- [README](https://github.com/AIPMAndy/PPTskill/blob/main/README.md): 项目说明（中文）
+- [README_EN.md](https://github.com/AIPMAndy/PPTskill/blob/main/README_EN.md): English README
+- [examples](https://github.com/AIPMAndy/PPTskill/tree/main/examples): 已验证示例项目
+- [CONTRIBUTING.md](https://github.com/AIPMAndy/PPTskill/blob/main/CONTRIBUTING.md): 贡献指南
+
+## Optional
+
+- [Repository](https://github.com/AIPMAndy/PPTskill)
+- [LICENSE](https://github.com/AIPMAndy/PPTskill/blob/main/LICENSE)
+- [Author on GitHub](https://github.com/AIPMAndy)
