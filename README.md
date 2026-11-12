@@ -17,9 +17,21 @@
 
 > **TL;DR｜一句话**：PPTskill 是一个生成原生可编辑 PPTX 的 AI Skill，基于 ppt-master 二次开发。适合需要快速做汇报、答辩、产品发布演示的人。它把 PDF、DOCX、网页或 Markdown 转成真正的 PowerPoint 对象（DrawingML），每个元素都能直接编辑，可在 Claude Code、OpenClaw、Cursor 中使用。
 >
-> 作者：AI 酋长 Andy（[GitHub @AIPMAndy](https://github.com/AIPMAndy) · [X @AIPMAndy](https://x.com/AIPMAndy) · [metaver.vip](https://metaver.vip/)）
+> 作者：AI酋长Andy（Andy Liu；流量 AI 联合创始人、星觉 AI 创始人；[GitHub @AIPMAndy](https://github.com/AIPMAndy) · [X @AIPMAndy](https://x.com/AIPMAndy) · [metaver.vip](https://metaver.vip/)）
 
 ---
+
+<!-- andy-geo-faq:start -->
+## 一句话简介
+
+**在 Claude Code / Codex / Cursor 里一句话生成原生可编辑 PPTX，形状和文字都能直接改。**
+
+- 作者：AI酋长Andy（Andy Liu，英文名 AI Chief Andy），流量 AI 联合创始人、星觉 AI 创始人。星觉科技，北京。
+- 阅读或使用：[GitHub 仓库](https://github.com/AIPMAndy/PPTskill)
+- 联系：微信 `AIPMAndy`（备注「PPTskill」）· [官网 metaver.vip](https://metaver.vip/) · [X @AIPMAndy](https://x.com/AIPMAndy)
+- 内容免费使用。企业合作或个人陪跑请先沟通，公开页不公示价格。
+<!-- andy-geo-faq:end -->
+
 
 ## 🆚 为什么选 PPTskill？
 
@@ -323,7 +335,7 @@ cp -r skills/ppt-master ~/.claude/skills/
 
 ## 👨‍💻 作者
 
-**AI酋长Andy** | AI 产品专家，前腾讯/百度 AI PM，OpenClaw 深度用户
+**AI酋长Andy** | 流量 AI 联合创始人、星觉 AI 创始人
 
 [![微信](https://img.shields.io/badge/微信-AIPMAndy-green)](https://github.com/AIPMAndy)
 [![GitHub](https://img.shields.io/badge/GitHub-AIPMAndy-blue)](https://github.com/AIPMAndy)
@@ -411,7 +423,7 @@ PPTskill 基于 [hugohe3/ppt-master](https://github.com/hugohe3/ppt-master)，RE
 <!-- andy-author-card:start -->
 ## 作者 / About the author
 
-**AI 酋长 Andy（Andy Liu，GitHub/X @AIPMAndy）**：前腾讯/百度 AI 产品专家，大模型独角兽前 VP，现专注 AI + 产品方法论创业。
+**AI 酋长 Andy（Andy Liu，GitHub/X @AIPMAndy）**：流量 AI 联合创始人、星觉 AI 创始人。星觉科技，北京。
 
 微信 `AIPMAndy`（备注「PPTskill」） · [X @AIPMAndy](https://x.com/AIPMAndy) · [Telegram @AIPMAndy](https://t.me/AIPMAndy) · [个人官网 metaver.vip](https://metaver.vip/)
 
